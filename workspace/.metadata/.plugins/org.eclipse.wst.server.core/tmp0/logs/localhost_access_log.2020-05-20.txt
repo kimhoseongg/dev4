@@ -1,0 +1,11 @@
+127.0.0.1 - - [20/May/2020:11:59:54 +0900] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [20/May/2020:12:00:16 +0900] "GET /first/sample/openBoardList.do HTTP/1.1" 200 7824
+0:0:0:0:0:0:0:1 - - [20/May/2020:12:00:17 +0900] "GET /first/css/ui.css;jsessionid=47AB2EB955972EB0960AF61FC71E0670 HTTP/1.1" 200 1425
+0:0:0:0:0:0:0:1 - - [20/May/2020:12:00:17 +0900] "GET /first/js/common.js;jsessionid=47AB2EB955972EB0960AF61FC71E0670 HTTP/1.1" 200 3907
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:09 +0900] "POST /first/sample/openBoardDetail.do;jsessionid=47AB2EB955972EB0960AF61FC71E0670 HTTP/1.1" 200 2671
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:09 +0900] "GET /first/js/common.js HTTP/1.1" 200 3907
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:09 +0900] "GET /first/css/ui.css HTTP/1.1" 200 1425
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:12 +0900] "POST /first/sample/openBoardList.do HTTP/1.1" 200 7516
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:14 +0900] "POST /first/sample/openBoardDetail.do HTTP/1.1" 200 2670
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:17 +0900] "POST /first/sample/openBoardList.do HTTP/1.1" 200 7582
+0:0:0:0:0:0:0:1 - - [20/May/2020:13:23:19 +0900] "POST /first/sample/openBoardDetail.do HTTP/1.1" 200 2679

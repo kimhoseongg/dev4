@@ -1,0 +1,228 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ include file ="/WEB-INF/include/include-header.jspf" %>
+
+</head>
+<body>
+	<h2>게시판 목록</h2>
+	<select name="combo" id="combo">
+		<option value="all" selected>=전체=</option>
+		<option value="IDX">글번호</option>
+		<option value="TITLE">제목</option>
+	</select>
+	
+	<input type="hidden" id="combo2" value="${param.com2 }"/>
+	
+	<!-- 텍스트 상자에서 엔터키 이벤트 추가  --> 
+	<input type="text" id="text" onKeypress="javascript:if(event.keyCode==13){fn_op()}"/>
+	
+	<input type="hidden" id="text2" value="${param.oop }"/>
+	
+	<!--  <input type="button" id="search" value="조회">  -->
+	<a href="#this" class="btn" id="op">조회</a>
+	<table class="board_list">
+		<colgroup>
+			<col width="5%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="*"/>
+			<col width="15%"/>
+			<col width="20%"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">
+				<!-- //<div class="S_all"> -->
+					<input type="checkbox" id="select_all">
+				<!-- //</div> -->
+				</th>
+				<th scope="col">글번호</th>
+				<th scope="col">미리보기</th>
+				<th scope="col">제목</th>
+				<th scope="col">조회수</th>
+				<th scope="col">작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:choose>
+				<c:when test="${fn:length(list) > 0}">  <!-- boolean -->
+					<c:forEach items="${list }" var="row" varStatus="status">
+						<tr>
+							<td><input type="checkbox" name="IDX3" id="IDX3" value="${row.IDX }"></td>
+							<td>${row.IDX }</td>
+							<td class="view">
+								<button class="view1">미리보기</button>
+								<input type="hidden" id="IDX2" value="${row.IDX }">
+							</td>
+								
+							<td class="title">
+								<a href="#this" name="title">${row.TITLE }</a>
+								<input type="hidden" id="IDX" value="${row.IDX }">
+							</td>
+							<td>${row.HIT_CNT }</td>
+							<td>${row.CREA_DTM }</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4">조회된 결과가 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</tbody>
+	</table>
+	
+	<c:if test="${not empty paginationInfo }">
+		<ui:pagination paginationInfo = "${paginationInfo }" type="text" jsFunction="fn_search"/>
+	</c:if>
+	<input type="hidden" id="currentPageNo" name="currentPageNo"/>
+	
+	<br/>
+	<a href="#this" class="btn" id="write">글쓰기</a>
+	<a href="#this" class="btn" id="delete">삭제</a>
+	
+	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#write").on("click", function(e){ //글쓰기 버튼
+				e.preventDefault();
+				fn_openBoardWrite();
+			});	
+			
+			$("a[name='title']").on("click", function(e){ //제목 
+				e.preventDefault();
+				fn_openBoardDetail($(this)); //$(this)의미 : jQuery <a 태그의미/ object를 의미함
+			});
+
+			$("#op").on("click", function(e) {
+				e.preventDefault();
+				fn_op();
+			});
+
+			$(".view1").on("click", function(e){
+				e.preventDefault();
+				fn_view($(this));
+			});
+
+			$("#select_all").on("click", function(e){
+				if($("input:checkbox[id='select_all']").prop("checked"))
+				{
+					$("input[type=checkbox]").prop("checked", true);
+				}else{
+					$("input[type=checkbox]").prop("checked", false);
+				}
+			});
+
+			$("#delete").on("click", function(e){
+				e.preventDefault();
+				fn_deleteBoard();
+			});
+
+			
+		});
+		
+		function fn_deleteBoard()
+		{
+			var IDX4 = "";
+
+			$('input[type="checkbox"]:checked').each(function(index){
+				if(index != 0){
+					IDX4 += "  OR IDX=  ";
+				}
+				IDX4 += $(this).val();
+			});
+			
+			alert(IDX4);
+
+			var comSubmit = new ComSubmit();
+			comSubmit.setUrl("<c:url value='/sample/deleteBoard.do'/>");
+			comSubmit.addParam("IDX", IDX4);
+			comSubmit.submit();
+		};
+		
+		
+		
+		function fn_openBoardWrite(){
+			var comSubmit = new ComSubmit();
+			comSubmit.setUrl("<c:url value='/sample/openBoardWrite.do' />");
+			comSubmit.submit();
+		}
+		
+		function fn_openBoardDetail(obj){
+			
+			
+			var comSubmit = new ComSubmit();
+			comSubmit.setUrl("<c:url value='/sample/openBoardDetail.do' />");
+			comSubmit.addParam("IDX", obj.parent().find("#IDX").val()); // key와 value값
+			comSubmit.submit();
+			
+		}
+
+
+		function fn_view(obj)
+		{
+			var idx2 = obj.parent().find("#IDX2").val();
+			var url = "<c:url value='/sample/openBoardDetail2.do?IDX='/>" + idx2;
+			var name = "_blank";
+			var set = "width=500, height=400";
+
+			window.open(url,name,set);
+			
+		}
+		
+		function fn_search(pageNo)
+		{
+			var comSubmit = new ComSubmit();
+			var oop = document.getElementById("text2").value;  //검색어 가져오기
+			var com2 = document.getElementById("combo2").value; //콤보박스 가져오기
+
+		
+
+			comSubmit.setUrl("<c:url value='/sample/openBoardListSearch.do'/>");
+			comSubmit.addParam("oop", oop);
+			comSubmit.addParam("com2", com2);
+			comSubmit.addParam("currentPageNo", pageNo);
+
+			comSubmit.submit();
+		}
+
+		
+
+		
+		function fn_op()
+		{
+			var comSubmit = new ComSubmit();
+			var oop = document.getElementById("text").value;  //검색어 가져오기
+			var com2 = document.getElementById("combo").value; //콤보박스 가져오기
+
+			console.log(oop);
+			
+			if(oop == "")
+			{
+				comSubmit.setUrl("<c:url value='/sample/openBoardList.do'/>");
+				comSubmit.submit();
+				alert("입력하세요!");
+			}else{
+				//alert(oop);  //잘 넘어오는지 확인하숑
+				//alert(com2);  //옵션도 잘 넘어오는지 확인하숑
+			comSubmit.setUrl("<c:url value='/sample/openBoardListSearch.do'/>");
+			comSubmit.addParam("oop", oop);
+			comSubmit.addParam("com2", com2);
+			comSubmit.submit();
+
+			}
+		}
+
+		
+	</script>	
+</body>
+</html>

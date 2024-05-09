@@ -1,0 +1,11 @@
+127.0.0.1 - - [21/Dec/2021:14:21:23 +0900] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:33 +0900] "GET /first/sample/openBoardList.do HTTP/1.1" 200 14046
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:33 +0900] "GET /first/css/ui.css;jsessionid=E485C0EB5AC56F67E92D4D623FAA5B97 HTTP/1.1" 200 1425
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:33 +0900] "GET /first/js/common.js;jsessionid=E485C0EB5AC56F67E92D4D623FAA5B97 HTTP/1.1" 200 3907
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:34 +0900] "GET /favicon.ico HTTP/1.1" 404 973
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:38 +0900] "POST /first/sample/openBoardDetail.do;jsessionid=E485C0EB5AC56F67E92D4D623FAA5B97 HTTP/1.1" 200 4604
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:38 +0900] "GET /first/css/ui.css HTTP/1.1" 200 1425
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:38 +0900] "GET /first/js/common.js HTTP/1.1" 200 3907
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:42 +0900] "POST /first/sample/openBoardDetailNext.do HTTP/1.1" 200 4621
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:45 +0900] "POST /first/sample/openBoardDetail.do HTTP/1.1" 200 4621
+0:0:0:0:0:0:0:1 - - [21/Dec/2021:14:21:49 +0900] "POST /first/sample/openBoardDetail.do HTTP/1.1" 200 4621
